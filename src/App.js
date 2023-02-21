@@ -1,4 +1,4 @@
-import Login from './components/Login'
+import Home from './components/Home'
 
 import './App.css'
 
@@ -42,6 +42,6 @@ const salaryRangesList = [
 ]
 
 // Replace your code here
-const App = () => <Login />
+const App = () => <Home />
 
 export default App
