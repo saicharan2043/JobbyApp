@@ -1,4 +1,4 @@
-import Home from './components/Home'
+import Jobs from './components/Jobs'
 
 import './App.css'
 
@@ -42,6 +42,11 @@ const salaryRangesList = [
 ]
 
 // Replace your code here
-const App = () => <Home />
+const App = () => (
+  <Jobs
+    employmentTypesList={employmentTypesList}
+    salaryRangesList={salaryRangesList}
+  />
+)
 
 export default App
