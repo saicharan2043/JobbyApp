@@ -2,7 +2,7 @@ import Cookies from 'js-cookie'
 
 import './index.css'
 
-// import Hearder from '../Header'
+import Header from '../Header'
 
 const Home = props => {
   const clickJobs = () => {
@@ -13,7 +13,7 @@ const Home = props => {
 
   return (
     <div className="bg-image-home">
-      {/* <Header /> */}
+      <Header />
       <div className="text-container-home">
         <h1 className="heading-home">Find The Job That Fits Your Life</h1>
         <p className="discription-home">
