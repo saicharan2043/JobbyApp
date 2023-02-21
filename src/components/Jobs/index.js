@@ -1,30 +1,38 @@
+import {BsSearch} from 'react-icons/bs'
+
 import {Component} from 'react'
 
 import Cookies from 'js-cookie'
 
 import Header from '../Header'
 
-// const EmploymentTypes = (props) =>{
-//     const {employmentList} = props
-//     const {label , employmentTypeId} = employmentList
-//     return(
-//         <li className="">
-//             <input type="checkbox" className="" id={employmentTypeId}/>
-//             <label className="" htmlFor={employmentTypeId}>{label}</label>
-//         </li>
-//     )
-// }
+import './index.css'
 
-// const RedioButton = (props) =>{
-//     const {salaryList} = props
-//     const {label , salaryRangeId} = salaryList
-//     return(
-//         <li className="">
-//             <input type="redio" className="" id={salaryRangeId} name="salary"/>
-//             <label className="" htmlFor={salaryRangeId}>{label}</label>
-//         </li>
-//     )
-// }
+const EmploymentTypes = props => {
+  const {employmentList} = props
+  const {label, employmentTypeId} = employmentList
+  return (
+    <li className="list-of-checkbox">
+      <input type="checkbox" className="checkbox" id={employmentTypeId} />
+      <label className="label-checkbox" htmlFor={employmentTypeId}>
+        {label}
+      </label>
+    </li>
+  )
+}
+
+const RedioButton = props => {
+  const {salaryList} = props
+  const {label, salaryRangeId} = salaryList
+  return (
+    <li className="list-of-redio">
+      <input type="radio" className="redio" id={salaryRangeId} name="salary" />
+      <label className="label-redio" htmlFor={salaryRangeId}>
+        {label}
+      </label>
+    </li>
+  )
+}
 
 const profileStatus = {
   success: 'SUCCESS',
@@ -95,6 +103,25 @@ class Jobs extends Component {
     }
   }
 
+  getJobsFail = () => {
+    const onRetry = () => {
+      this.getJobsData()
+    }
+
+    return (
+      <div className="">
+        <img src="" alt="" className="" />
+        <p className="">Oops! Something Went Wrong</p>
+        <p className="">
+          We cannot seem to find the page your are looking for.
+        </p>
+        <button className="" onClick={onRetry}>
+          Retry
+        </button>
+      </div>
+    )
+  }
+
   getJobsData = async () => {
     this.setState({StatusOfJobs: jobsStatus.loading})
 
@@ -118,7 +145,9 @@ class Jobs extends Component {
         rating: echValue.rating,
         title: echValue.title,
       }))
-      console.log(updatedData)
+      this.setState({jobsList: updatedData, StatusOfJobs: jobsStatus.success})
+    } else {
+      this.setState({StatusOfJobs: jobsStatus.failure})
     }
   }
 
@@ -129,49 +158,70 @@ class Jobs extends Component {
 
     return (
       <>
-        <h1>hello</h1>
-        {/* <div className="">
-                    <div className="">
-                        <input type="search" className="" placeholder="Search"/>
-                        <div className="">
-                            <img src={profileImageUrl} alt="" className=""/>
-                            <h1 className="">{name}</h1>
-                            <p classNames="">{shortBio}</p>
-                        </div>
-                        <hr className=""/>
-                        <h1 className="">Type of Employment</h1>
-                        <ul className="">
-                            {employmentTypesList.map((echValue) => (
-                                <EmploymentTypes employmentList={echValue} key={echValue.employmentTypeId}/>
-                            ))}
-                        </ul>
-                        <hr className=""/>
-                        <h1 className="">Salary Range</h1>
-                        <ul className="">
-                            {salaryRangesList.map((echValue) =>(
-                                <RedioButton salaryList={echValue} key={echValue.salaryRangeId}/>
-                            ))}
-                        </ul>
+        <Header />
+        <div className="bg-color-jobs">
+          <div className="left-side-container">
+            <div className="input-sm-container">
+              <input
+                type="search"
+                className="input-sm-divice"
+                placeholder="Search"
+              />
+              <div className="search-icon-container-sm">
+                <BsSearch className="search-icon-sm" />
+              </div>
+            </div>
+            <div className="profile-container">
+              <img src={profileImageUrl} alt="" className="profile-img" />
+              <h1 className="person-name">{name}</h1>
+              <p className="bio">{shortBio}</p>
+            </div>
+            <hr className="hr" />
+            <h1 className="employment-text">Type of Employment</h1>
+            <ul className="checkbox-un-order-list">
+              {employmentTypesList.map(echValue => (
+                <EmploymentTypes
+                  employmentList={echValue}
+                  key={echValue.employmentTypeId}
+                />
+              ))}
+            </ul>
+            <hr className="hr" />
+            <h1 className="salary-text">Salary Range</h1>
+            <ul className="redio-un-order-list">
+              {salaryRangesList.map(echValue => (
+                <RedioButton
+                  salaryList={echValue}
+                  key={echValue.salaryRangeId}
+                />
+              ))}
+            </ul>
 
-                        <ul className="">
+            {/* <ul className="job-list-sm">
+              {jobsList.map(echValue => (
+                <JobCard cardOfJob={echValue} />
+              ))}
+            </ul> */}
+          </div>
+
+          <div className="right-side-container">
+            <div className="input-container">
+              <input
+                type="search"
+                className="input-divice"
+                placeholder="Search"
+              />
+              <div className="search-icon-container">
+                <BsSearch className="search-icon" />
+              </div>
+            </div>
+            {/* <ul className="">
                             {jobsList.map((echValue) =>(
                                 <JobCard cardOfJob={echValue}/>
                             ))}
-                        </ul>
-                    </div>
-
-
-
-
-                    <div className="">
-                        <input type="search" className="" placeholder="Search"/>
-                        <ul className="">
-                            {jobsList.map((echValue) =>(
-                                <JobCard cardOfJob={echValue}/>
-                            ))}
-                        </ul>
-                    </div>
-                </div> */}
+                        </ul> */}
+          </div>
+        </div>
       </>
     )
   }
