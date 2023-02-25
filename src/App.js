@@ -1,4 +1,12 @@
+import {Switch, Route} from 'react-router-dom'
+
+import JobItem from './components/JobItem'
+
 import Jobs from './components/Jobs'
+import Home from './components/Home'
+import Login from './components/Login'
+import ProtectedRoute from './components/ProtectedRoute'
+import NotFound from './components/NotFound'
 
 import './App.css'
 
@@ -7,18 +15,22 @@ const employmentTypesList = [
   {
     label: 'Full Time',
     employmentTypeId: 'FULLTIME',
+    isTrue: false,
   },
   {
     label: 'Part Time',
     employmentTypeId: 'PARTTIME',
+    isTrue: false,
   },
   {
     label: 'Freelance',
     employmentTypeId: 'FREELANCE',
+    isTrue: false,
   },
   {
     label: 'Internship',
     employmentTypeId: 'INTERNSHIP',
+    isTrue: false,
   },
 ]
 
@@ -43,10 +55,24 @@ const salaryRangesList = [
 
 // Replace your code here
 const App = () => (
-  <Jobs
-    employmentTypesList={employmentTypesList}
-    salaryRangesList={salaryRangesList}
-  />
+  <>
+    <Switch>
+      <Route exact path="/login" component={Login} />
+      <ProtectedRoute exact path="/" component={Home} />
+      <ProtectedRoute
+        exact
+        path="/jobs"
+        component={() => (
+          <Jobs
+            employmentTypesList={employmentTypesList}
+            salaryRangesList={salaryRangesList}
+          />
+        )}
+      />
+      <ProtectedRoute exact path="/jobs/:id" component={JobItem} />
+      <Route component={NotFound} />
+    </Switch>
+  </>
 )
 
 export default App
